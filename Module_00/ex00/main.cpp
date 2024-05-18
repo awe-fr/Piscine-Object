@@ -1,7 +1,5 @@
 #include "DivideAndRule.hpp"
 
-#include<unistd.h>
-
 int main() {
 	// Account accountA = Account();
 	// accountA.id = 0;

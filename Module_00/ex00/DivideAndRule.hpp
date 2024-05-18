@@ -9,10 +9,10 @@ class Bank;
 class Account
 {
 	private:
-		float	refund_rate;
-		float	value;
-		float	loan;
-		int		id;
+		float	_refundRate;
+		float	_value;
+		float	_loan;
+		int		_id;
 
 		friend class Bank;
 	public:
@@ -24,10 +24,10 @@ class Account
 class Bank
 {
 	private:
-		std::map<int, Account *>	clientAccounts;
-		std::map<int, bool>			clientMap;
-		float						liquidity;
-		int							nextClient;
+		std::map<int, Account *>	_clientAccounts;
+		std::map<int, bool>			_clientMap;
+		float						_liquidity;
+		int							_nextClient;
 
 	public:
 		Bank();

@@ -1,6 +1,6 @@
 #include "DivideAndRule.hpp"
 
-Account::Account(int id) : refund_rate(0), value(0), loan(0), id(id) {
+Account::Account(int id) : _refundRate(0), _value(0), _loan(0), _id(id) {
 
 }
 
@@ -10,13 +10,13 @@ Account::~Account() {
 
 void    Account::printAccountStatus() {
     std::cout << "Accout :" << std::endl;
-    std::cout << "Id : " << this->id << std::endl;
-    std::cout << "Value : " << this->value << std::endl;
-    std::cout << "Loan : " << this->loan << std::endl;
-    std::cout << "Refound rate : " << this->refund_rate << std::endl;
+    std::cout << "Id : " << this->_id << std::endl;
+    std::cout << "Value : " << this->_value << std::endl;
+    std::cout << "Loan : " << this->_loan << std::endl;
+    std::cout << "Refound rate : " << this->_refundRate << std::endl;
 }
 
-Bank::Bank() : liquidity(0), nextClient(1) {
+Bank::Bank() : _liquidity(0), _nextClient(1) {
 
 }
 
@@ -25,84 +25,84 @@ Bank::~Bank() {
 }
 
 void    Bank::createAccount() {
-    Account *client = new Account(nextClient);
-    this->clientAccounts[this->nextClient] = client;
-    this->clientMap[this->nextClient] = true;
-    std::cout << "Account n" << this->nextClient << " created" << std::endl;
-    this->nextClient++;
+    Account *client = new Account(_nextClient);
+    this->_clientAccounts[this->_nextClient] = client;
+    this->_clientMap[this->_nextClient] = true;
+    std::cout << "Account n" << this->_nextClient << " created" << std::endl;
+    this->_nextClient++;
 }
 
 void    Bank::deleteAccount(int id) {
     if (isActive(id) == false)
         return;
-    if (this->clientAccounts[id]->loan != 0) {
+    if (this->_clientAccounts[id]->_loan != 0) {
         std::cout << "You cannot close your account with a loan active" << std::endl;
         return;
     }
-    Account *client = this->clientAccounts[id];
-    this->clientAccounts.erase(id);
+    Account *client = this->_clientAccounts[id];
+    this->_clientAccounts.erase(id);
     delete client;
-    this->clientMap[id] = false;
+    this->_clientMap[id] = false;
     std::cout << "Account n" << id << " deleted" << std::endl;
 }
 
 void    Bank::addMoney(int id, float amount) {
     if (isActive(id) == false)
         return;
-    this->liquidity += amount * 0.05;
-    this->clientAccounts[id]->value += amount * 0.95;
+    this->_liquidity += amount * 0.05;
+    this->_clientAccounts[id]->_value += amount * 0.95;
     std::cout << "Account n" << id << " credited of "  << amount * 0.95 << "$" << std::endl;
 }
 
 void    Bank::removeMoney(int id, float amount) {
     if (isActive(id) == false)
         return;
-    this->clientAccounts[id]->value -= amount;
+    this->_clientAccounts[id]->_value -= amount;
     std::cout << "Account n" << id << " debited of "  << amount << "$" << std::endl;
 }
 
 void    Bank::assignLoan(int id, float amount, float rate) {
     if (isActive(id) == false)
         return;
-    if (this->clientAccounts[id]->loan != 0) {
+    if (this->_clientAccounts[id]->_loan != 0) {
         std::cout << "You already have a loan" << std::endl;
         return;
     }
-    if (this->liquidity < amount) {
+    if (this->_liquidity < amount) {
         std::cout << "Bank account to low for the loan" << std::endl;
         return;
     }
-    this->liquidity -= amount;
-    this->clientAccounts[id]->loan = amount;
-    this->clientAccounts[id]->refund_rate = rate;
-    this->clientAccounts[id]->value += amount;
+    this->_liquidity -= amount;
+    this->_clientAccounts[id]->_loan = amount;
+    this->_clientAccounts[id]->_refundRate = rate;
+    this->_clientAccounts[id]->_value += amount;
     std::cout << "Account n" << id << " loaned of "  << amount << "$" << std::endl;
 }
 
 void	Bank::refoundLoan(int id) {
     if (isActive(id) == false)
         return;
-    if (this->clientAccounts[id]->loan == 0) {
+    if (this->_clientAccounts[id]->_loan == 0) {
         std::cout << "You don't have any loan" << std::endl;
         return;
     }
-    if (this->clientAccounts[id]->value < this->clientAccounts[id]->loan * ((this->clientAccounts[id]->refund_rate / 100) + 1)) {
+    if (this->_clientAccounts[id]->_value < this->_clientAccounts[id]->_loan * ((this->_clientAccounts[id]->_refundRate / 100) + 1)) {
         std::cout << "You cannot refound your loan" << std::endl;
         return;
     }
-    this->clientAccounts[id]->value -= this->clientAccounts[id]->loan * ((this->clientAccounts[id]->refund_rate / 100) + 1);
-    this->liquidity += this->clientAccounts[id]->loan * ((this->clientAccounts[id]->refund_rate / 100) + 1);
-    std::cout << "Account n" << id << " loan refound (" << this->clientAccounts[id]->loan * ((this->clientAccounts[id]->refund_rate / 100) + 1) << "$)" << std::endl;
-    this->clientAccounts[id]->loan = 0;
-    this->clientAccounts[id]->refund_rate = 0;
+    this->_clientAccounts[id]->_value -= this->_clientAccounts[id]->_loan * ((this->_clientAccounts[id]->_refundRate / 100) + 1);
+    this->_liquidity += this->_clientAccounts[id]->_loan * ((this->_clientAccounts[id]->_refundRate / 100) + 1);
+    std::cout << "Account n" << id << " loan refound (" << this->_clientAccounts[id]->_loan * ((this->_clientAccounts[id]->_refundRate / 100) + 1) << "$)" << std::endl;
+    this->_clientAccounts[id]->_loan = 0;
+    this->_clientAccounts[id]->_refundRate = 0;
 }
 
 bool	Bank::isActive(int id) {
-    if (id >= this->nextClient) {
+    if (id >= this->_nextClient) {
         std::cout << "This client dosen't exist" << std::endl;
         return false;
     }
-    if (this->clientMap[id] == true) {
+    if (this->_clientMap[id] == true) {
         return true;
     }
     std::cout << "This client dosen't exist" << std::endl;
@@ -112,14 +112,14 @@ bool	Bank::isActive(int id) {
 void	Bank::printBankStatus() {
     int Active = countActive();
     std::cout << "Bank :" << std::endl;
-    std::cout << "Liquidity : " << this->liquidity << std::endl;
+    std::cout << "Liquidity : " << this->_liquidity << std::endl;
     std::cout << "Actve Account : " << Active << std::endl;
 }
 
 int		Bank::countActive() {
     int count = 0;
-    for (int i = 1; i < this->nextClient; i++) {
-        if (this->clientMap[i] == true)
+    for (int i = 1; i < this->_nextClient; i++) {
+        if (this->_clientMap[i] == true)
             count++;
     }
     return count;
@@ -128,5 +128,5 @@ int		Bank::countActive() {
 Account	*Bank::getAccount(int id) {
     if (isActive(id) == false)
         return NULL;
-    return (this->clientAccounts[id]);
+    return (this->_clientAccounts[id]);
 }
