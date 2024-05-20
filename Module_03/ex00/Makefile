@@ -1,11 +1,6 @@
-NAME = Work
+NAME = Car
 
 SRCS = main.cpp\
-		Worker.cpp\
-		Shovel.cpp\
-		Hammer.cpp\
-		Tool.cpp\
-		Workshop.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
