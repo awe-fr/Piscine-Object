@@ -1,4 +1,4 @@
-NAME = Command
+NAME = Shape
 
 SRCS = main.cpp\
 
