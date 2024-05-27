@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <chrono>
+#include <ctime>
 
 class ILogger {
     public:
@@ -18,8 +20,19 @@ class Logger1 : public ILogger {
             file.close();
         };
         void write(std::string n) {
+            auto end = std::chrono::system_clock::now();
+            std::time_t end_time = std::chrono::system_clock::to_time_t(end);
             std::ofstream file(this->filePath.c_str(), std::ios::app);
-            file << n;
+            char *date = std::ctime(&end_time);
+            std::string ret;
+            ret += "[";
+            int i = 0;
+            while(date[i] != '\n')
+                ret += date[i++];
+            ret += "] ";
+            ret += n;
+            ret += "\n";
+            file << ret;
             file.close();
         };
 };
@@ -30,6 +43,7 @@ class Logger2 : public ILogger {
     public:
         Logger2(std::ostream& out) : stream(out) {};
         void write(std::string n) {
+            n += "\n";
             stream.write(n.c_str(), n.length());
         };
 };

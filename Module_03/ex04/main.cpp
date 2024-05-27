@@ -10,6 +10,6 @@ int main () {
     for (int i = vec.size(); i > 0; i--) {
         vec[i - 1]->write("test");
     }
-    vec[0]->write("string 1\n");
-    vec[1]->write("string 2\n");
+    vec[0]->write("string 1");
+    vec[1]->write("string 2");
 }
