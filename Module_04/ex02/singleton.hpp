@@ -5,14 +5,12 @@
 #include "Room.hpp"
 
 #include <iostream>
-#include <mutex>
 
 template <typename T, typename L>
 class Singleton {
     protected:
         static T *_instance;
         std::vector<L *> _list;
-        static std::mutex _mutex;
 
         Singleton() {std::cout << "Init Singleton list" << std::endl;};
         virtual ~Singleton() {std::cout << "Delete Singleton list" << std::endl;};
@@ -20,7 +18,6 @@ class Singleton {
         Singleton& operator=(const Singleton&) = delete;
     public:
         static T *getInstance() {
-            std::lock_guard<std::mutex> lock(_mutex);
             if (_instance == nullptr)
                 _instance = new T();
             return _instance;
@@ -45,9 +42,6 @@ class Singleton {
 
 template <typename T, typename L>
 T* Singleton<T, L>::_instance = nullptr;
-
-template <typename T, typename L>
-std::mutex Singleton<T, L>::_mutex;
 
 class StudentList : public Singleton<StudentList, Student> {
     private:
