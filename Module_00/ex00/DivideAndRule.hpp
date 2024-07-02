@@ -1,5 +1,6 @@
 #pragma once
 
+#include <exception>
 #include <iostream>
 #include <vector>
 #include <map>
@@ -18,7 +19,7 @@ class Account
 	public:
 		Account(int id);
 		~Account();
-		void	printAccountStatus();
+		void	printAccountStatus() const;
 };
 
 class Bank
@@ -32,14 +33,18 @@ class Bank
 	public:
 		Bank();
 		~Bank();
-		Account		*getAccount(int id);
-		void		assignLoan(int id, float amount, float rate);
-		void		removeMoney(int id, float amount);
-		void		addMoney(int id, float amount);
-		void		deleteAccount(int id);
-		void		refoundLoan(int id);
-		void		printBankStatus();
-		bool		isActive(int id);
-		void		createAccount();
-		int			countActive();
+		const Account	&getAccount(int id);
+		void			assignLoan(int id, float amount, float rate);
+		void			removeMoney(int id, float amount);
+		void			addMoney(int id, float amount);
+		void			deleteAccount(int id);
+		void			refoundLoan(int id);
+		void			printBankStatus();
+		bool			isActive(int id);
+		const Account	&createAccount();
+		int				countActive();
+		class	AccountFailed : public std::exception {
+			public:
+				virtual const char *what() const throw();
+		};
 };

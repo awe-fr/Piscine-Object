@@ -8,7 +8,7 @@ Account::~Account() {
 
 }
 
-void    Account::printAccountStatus() {
+void    Account::printAccountStatus() const {
     std::cout << "Accout :" << std::endl;
     std::cout << "Id : " << this->_id << std::endl;
     std::cout << "Value : " << this->_value << std::endl;
@@ -24,12 +24,13 @@ Bank::~Bank() {
 
 }
 
-void    Bank::createAccount() {
+const Account	&Bank::createAccount() {
     Account *client = new Account(_nextClient);
     this->_clientAccounts[this->_nextClient] = client;
     this->_clientMap[this->_nextClient] = true;
     std::cout << "Account n" << this->_nextClient << " created" << std::endl;
     this->_nextClient++;
+    return (getAccount(this->_nextClient - 1));
 }
 
 void    Bank::deleteAccount(int id) {
@@ -99,13 +100,13 @@ void	Bank::refoundLoan(int id) {
 
 bool	Bank::isActive(int id) {
     if (id >= this->_nextClient) {
-        std::cout << "This client dosen't exist" << std::endl;
+        // std::cout << "This client dosen't exist" << std::endl;
         return false;
     }
     if (this->_clientMap[id] == true) {
         return true;
     }
-    std::cout << "This client dosen't exist" << std::endl;
+    // std::cout << "This client dosen't exist" << std::endl;
     return false;
 }
 
@@ -125,8 +126,12 @@ int		Bank::countActive() {
     return count;
 }
 
-Account	*Bank::getAccount(int id) {
+const Account	&Bank::getAccount(int id) {
     if (isActive(id) == false)
-        return NULL;
-    return (this->_clientAccounts[id]);
+        throw AccountFailed();
+    return (*this->_clientAccounts[id]);
+}
+
+const char *Bank::AccountFailed::what() const throw() {
+    return ("This id is not affiliated with an account.");
 }
