@@ -17,6 +17,7 @@ class Graph {
         Graph(float x, float y);
         ~Graph();
         void    addPoint(float x, float y);
+        void    addPoint(vec2 point);
         void    printGraph();
         bool    isPoint(int x, int y);
         bool    alreadyHere(vec2 toCheck);

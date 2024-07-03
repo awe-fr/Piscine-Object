@@ -15,6 +15,23 @@ Graph::~Graph() {
 
 }
 
+void    Graph::addPoint(vec2 point) {
+    if (point.x > this->_size.x || point.x <= 0) {
+        std::cout << std::endl << "Point out of range" << std::endl;
+        return;
+    }
+    if (point.y > this->_size.y || point.y <= 0) {
+        std::cout << std::endl << "Point out of range" << std::endl;
+        return;
+    }
+    if (alreadyHere(point) == true) {
+        std::cout << std::endl << "Point already here" << std::endl;
+        return;
+    }
+    this->_points.push_back(point);
+    printGraph();
+}
+
 void    Graph::addPoint(float x, float y) {
     int setx = (int)x;
     if (setx > this->_size.x || setx <= 0) {
