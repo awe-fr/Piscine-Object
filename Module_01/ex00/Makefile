@@ -17,7 +17,10 @@ RM = rm -f
 all:			$(NAME)
 
 $(NAME):		$(OBJS)
-				$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+				$(CC) $(OBJS) -o $(NAME)
+
+%.o: 			%.cpp
+				$(CC) $(CFLAGS) -c $< -o $@
 				
 clean:
 			$(RM) $(OBJS)
