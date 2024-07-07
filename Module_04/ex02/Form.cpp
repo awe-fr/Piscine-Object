@@ -12,8 +12,8 @@ void NeedMoreClassRoomForm::fill(long long id) {
 
 void NeedMoreClassRoomForm::execute() {
     if (this->_filled == true) {
-        Classroom push(this->_id);
-        this->_roomList->add(&push);
+        Classroom *push = new Classroom(this->_id);
+        this->_roomList->add(push);
         std::cout << "Classroom added to room list" << std::endl;
         return;
     }
@@ -59,9 +59,9 @@ void SubscriptionToCourseForm::fill(std::vector<Course *> *list, Course *toSub, 
 
 void SubscriptionToCourseForm::execute() {
     if (this->_filled == true) {
-        std::vector<Course *> conv = *this->_list;
-        for (long unsigned int i = 0; i < conv.size(); i++) {
-            if (conv[i] == this->_toSub) {
+        // std::vector<Course *> conv = *this->_list;
+        for (long unsigned int i = 0; i < (*_list).size(); i++) {
+            if ((*_list)[i] == this->_toSub) {
                 (*_list)[i]->subscribe(this->_stud);
                 std::cout << "Student subscribed" << std::endl;
                 return;
@@ -85,8 +85,8 @@ void NeedCourseCreationForm::fill(std::string name) {
 
 void NeedCourseCreationForm::execute() {
     if (this->_filled == true) {
-        Course push(this->_name);
-        this->_courseList->add(&push);
+        Course *push = new Course(this->_name);
+        this->_courseList->add(push);
         std::cout << "Course added to courses list" << std::endl;
         return;
     }

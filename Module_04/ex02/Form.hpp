@@ -25,6 +25,7 @@ class Form
 
     public:
         Form() {};
+        virtual ~Form() {};
 
         virtual void execute() = 0;
 };

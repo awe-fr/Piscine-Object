@@ -35,6 +35,7 @@ class Singleton {
             if (toRm != nullptr) {
                 for (int i = this->_list.size(); i > 0; i--) {
                     if (this->_list[i - 1] == toRm) {
+                        delete toRm;
                         this->_list.erase(this->_list.begin() + i - 1);
                         std::cout << "Removed from list" << std::endl;
                         break;
@@ -42,6 +43,12 @@ class Singleton {
                 }
             }
         };
+        void    cleanup() {
+            for (int i = this->_list.size(); i > 0; i--) {
+                delete this->_list[i - 1];
+            }
+            std::cout << "Singleton cleanup" << std::endl;
+        }
 };
 
 template <typename T, typename L>
