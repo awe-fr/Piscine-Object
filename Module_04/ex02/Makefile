@@ -1,6 +1,9 @@
 NAME = Factory
 
 SRCS = main.cpp\
+		Form.cpp\
+		Person.cpp\
+		Course.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

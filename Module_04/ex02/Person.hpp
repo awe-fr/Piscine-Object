@@ -3,6 +3,9 @@
 #include <string>
 
 #include "Room.hpp"
+#include "Form.hpp"
+
+enum class FormType;
 
 class Person
 {
@@ -24,6 +27,7 @@ public:
 	void attendClass(Classroom* p_classroom);
 	void exitClass();
 	void graduate(Course* p_course);
+	void sub(Course *course);
 };
 
 class Staff : public Person
@@ -41,7 +45,9 @@ private:
 	std::vector<Form*> _formToValidate;
 	
 public:
+	Headmaster(std::string name) : Staff(name) {};
 	void receiveForm(Form* p_form);
+	void exec();
 };
 
 class Secretary : public Staff
@@ -49,6 +55,7 @@ class Secretary : public Staff
 private:
 
 public:
+	Secretary(std::string name) : Staff(name) {};
 	Form* createForm(FormType p_formType);
 	void archiveForm();
 };
@@ -57,8 +64,8 @@ class Professor : public Staff
 {
 private:
 	Course* _currentCourse;
-
 public:
+	Professor(std::string name) : Staff(name), _currentCourse(nullptr) {};
 	void assignCourse(Course* p_course);
 	void doClass();
 	void closeCourse();

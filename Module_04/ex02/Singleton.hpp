@@ -4,6 +4,10 @@
 #include "Course.hpp"
 #include "Room.hpp"
 
+class Staff;
+class Room;
+class Course;
+
 #include <iostream>
 
 template <typename T, typename L>
@@ -22,7 +26,7 @@ class Singleton {
                 _instance = new T();
             return _instance;
         }
-        std::vector<L *> *getList() {return this->_list;};
+        std::vector<L *> *getList() {return &this->_list;};
         void    add(L *toAdd) {
             if (toAdd != nullptr)
                 this->_list.push_back(toAdd);
