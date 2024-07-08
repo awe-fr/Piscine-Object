@@ -8,6 +8,8 @@ class Person;
 #include "Person.hpp"
 #include "Form.hpp"
 
+class Form;
+
 class Room
 {
     private:
@@ -27,9 +29,8 @@ class Classroom : public Room
 {
     private:
         Course* _currentRoom;
-
     public:
-        Classroom();
+        Classroom(long long id) : Room(id) {};
         void assignCourse(Course* p_course);
 };
 

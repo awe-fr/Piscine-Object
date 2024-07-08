@@ -49,6 +49,12 @@
         "fstream": "cpp",
         "chrono": "cpp",
         "ctime": "cpp",
-        "ratio": "cpp"
-    }
+        "ratio": "cpp",
+        "condition_variable": "cpp",
+        "mutex": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }

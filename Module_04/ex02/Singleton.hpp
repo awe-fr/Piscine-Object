@@ -4,6 +4,10 @@
 #include "Course.hpp"
 #include "Room.hpp"
 
+class Staff;
+class Room;
+class Course;
+
 #include <iostream>
 
 template <typename T, typename L>
@@ -22,7 +26,7 @@ class Singleton {
                 _instance = new T();
             return _instance;
         }
-        std::vector<L *> *getList() {return this->_list;};
+        std::vector<L *> *getList() {return &this->_list;};
         void    add(L *toAdd) {
             if (toAdd != nullptr)
                 this->_list.push_back(toAdd);
@@ -31,6 +35,7 @@ class Singleton {
             if (toRm != nullptr) {
                 for (int i = this->_list.size(); i > 0; i--) {
                     if (this->_list[i - 1] == toRm) {
+                        delete toRm;
                         this->_list.erase(this->_list.begin() + i - 1);
                         std::cout << "Removed from list" << std::endl;
                         break;
@@ -38,6 +43,12 @@ class Singleton {
                 }
             }
         };
+        void    cleanup() {
+            for (int i = this->_list.size(); i > 0; i--) {
+                delete this->_list[i - 1];
+            }
+            std::cout << "Singleton cleanup" << std::endl;
+        }
 };
 
 template <typename T, typename L>

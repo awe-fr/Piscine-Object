@@ -25,7 +25,7 @@ class Singleton {
                 _instance = new T();
             return _instance;
         }
-        std::vector<L *> *getList() {return this->_list;};
+        std::vector<L *> *getList() {return &this->_list;};
         void    add(L *toAdd) {
             if (toAdd != nullptr)
                 this->_list.push_back(toAdd);
