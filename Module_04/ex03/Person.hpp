@@ -5,6 +5,9 @@
 #include "Room.hpp"
 #include "Form.hpp"
 
+class TeachCourseForm;
+class GraduateForm;
+
 enum class FormType;
 
 class Person
@@ -15,7 +18,6 @@ class Person
     public:
         Person(std::string p_name) : _name(p_name) {};
         Room* room() {return (_currentRoom);}
-		virtual void formrcv(Form *ret) {};
 };
 
 class Student : public Person
@@ -49,7 +51,8 @@ private:
 	
 public:
 	Headmaster(std::string name) : Staff(name) {};
-	void askForm(FormType p_formType, Person *asked);
+	void askFormnewCourse(FormType p_formType, Professor *asked);
+	void askFormGraduate(FormType p_formType, Professor *asked);
 	void receiveForm(Form* p_form);
 	void exec();
 };
@@ -68,12 +71,18 @@ class Professor : public Staff
 {
 private:
 	Course* _currentCourse;
-	Form * _waitFill;
+	TeachCourseForm * _waitFill;
+	GraduateForm * _waitFillGrad;
 public:
-	Professor(std::string name) : Staff(name), _currentCourse(nullptr), _waitFill(nullptr) {};
+	Professor(std::string name);
 	void assignCourse(Course* p_course);
-	void formrcv(Form *ret);
+	void askCourse();
+	void askGraduate();
+	void formrcv(TeachCourseForm *ret);
+	void formrcv(GraduateForm *ret);
 	void doClass();
 	void closeCourse();
-	void fill(Course *course);
+	void fillCourse(Course *course);
+	void fillGrad(Course *course, Student *stud);
+	~Professor();
 };

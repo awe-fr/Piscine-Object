@@ -48,7 +48,6 @@ void Headmaster::receiveForm(Form* p_form) {
 void Headmaster::exec() {
     for (unsigned long int i = 0; i < this->_formToValidate.size(); i++) {
         this->_formToValidate[i]->execute();
-        std::cout << i << std::endl;
     }
     this->_formToValidate.clear();
 }

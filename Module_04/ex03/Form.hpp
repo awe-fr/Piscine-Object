@@ -12,7 +12,8 @@ enum class FormType
 	NeedMoreClassRoom,
 	NeedCourseCreation,
 	SubscriptionToCourse,
-    TeachCourse
+    TeachCourse,
+    Graduate
 };
 
 enum class Event
@@ -30,6 +31,40 @@ class Form
 
         virtual void execute() = 0;
 };
+
+
+
+
+
+class GraduateForm : public Form
+{
+    private:
+        std::vector<Course *> *_list;
+        Student *_stud;
+        Course *_course;
+        bool _filled;
+    public:
+        GraduateForm() : _filled(false) {};
+        void fill(Course *course, Student *stud);
+        void execute();
+};
+
+class FillGraduateForm : public Form
+{
+    private:
+        GraduateForm *_form;
+        Student *_stud;
+        Course *_course;
+    public:
+        FillGraduateForm(GraduateForm *form, Course *course, Student *stud) : _form(form), _course(course), _stud(stud) {};
+        void execute();
+};
+
+
+
+
+
+
 
 class CourseFinishedForm : public Form
 {
@@ -144,6 +179,6 @@ class FillTeachCourseForm : public Form
         Course *_toSub;
         Professor *_stud;
     public:
-        FillTeachCourseForm(Form *form, Course *toSub, Professor *stud);
+        FillTeachCourseForm(TeachCourseForm *form, Course *toSub, Professor *stud);
         void execute();
 };

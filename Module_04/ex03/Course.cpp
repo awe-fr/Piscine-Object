@@ -20,3 +20,11 @@ void Course::subscribe(Student* p_student) {
         std::cout << "Student added to the course" << std::endl;
     }
 }
+
+void Course::unsub(Student *stud) {
+    for (int i = this->_students.size(); i > 0; i--) {
+        if (this->_students[i - 1] == stud) {
+            this->_students[i - 1] = nullptr;
+        }
+    }
+}

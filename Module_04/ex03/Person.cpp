@@ -24,6 +24,10 @@ Form* Secretary::createForm(FormType p_formType) {
         ret = new TeachCourseForm();
         return ret;
         break;
+    case FormType::Graduate:
+        ret = new GraduateForm();
+        return ret;
+        break;
     default:
         return nullptr;
         break;
@@ -42,7 +46,8 @@ void Professor::assignCourse(Course* p_course) {
         this->_currentCourse = p_course;
         std::cout << "Professor teaching new course" << std::endl;
     }
-    std::cout << "Professor already have a course" << std::endl;
+    else
+        std::cout << "Professor already have a course" << std::endl;
 }
 
 void Headmaster::receiveForm(Form* p_form) {
@@ -52,18 +57,23 @@ void Headmaster::receiveForm(Form* p_form) {
 void Headmaster::exec() {
     for (unsigned long int i = 0; i < this->_formToValidate.size(); i++) {
         this->_formToValidate[i]->execute();
-        std::cout << i << std::endl;
     }
     this->_formToValidate.clear();
 }
 
-void Headmaster::askForm(FormType p_formType, Person *asked) {
+void Headmaster::askFormnewCourse(FormType p_formType, Professor *asked) {
     Secretary sec("Catoch");
     Form *toRet = sec.createForm(p_formType);
-    asked->formrcv(toRet);
+    asked->formrcv((TeachCourseForm *)toRet);
 }
 
-void Professor::formrcv(Form *ret) {
+void Headmaster::askFormGraduate(FormType p_formType, Professor *asked) {
+    Secretary sec("Catoch");
+    Form *toRet = sec.createForm(p_formType);
+    asked->formrcv((GraduateForm *)toRet);
+}
+
+void Professor::formrcv(TeachCourseForm *ret) {
     if (this->_waitFill != nullptr)
         delete this->_waitFill;
     this->_waitFill = ret;
@@ -75,7 +85,13 @@ void Student::formrcv(Form *ret) {
     this->_waitFill = ret;
 }
 
-void Professor::fill(Course *course) {
+void Professor::formrcv(GraduateForm *ret) {
+    if (this->_waitFillGrad != nullptr)
+        delete this->_waitFillGrad;
+    this->_waitFillGrad = ret;
+}
+
+void Professor::fillCourse(Course *course) {
     if (_waitFill != nullptr) {
         Headmaster master("thiery");
         FillTeachCourseForm fill(this->_waitFill, course, this);
@@ -85,6 +101,54 @@ void Professor::fill(Course *course) {
     }
 }
 
+void Professor::fillGrad(Course *course, Student *stud) {
+    if (_waitFillGrad != nullptr) {
+        Headmaster master("thiery");
+        FillGraduateForm fill(this->_waitFillGrad, course, stud);
+        master.receiveForm(&fill);
+        master.receiveForm(this->_waitFillGrad);
+        master.exec();
+    }
+}
+
 void Student::fill() {
 
+}
+
+void Professor::doClass() {
+    if (this->_currentCourse != nullptr) {
+        std::cout << this->_name << " is teaching " << this->_currentCourse->getName() << std::endl;
+    }
+    else
+        std::cout << this->_name << " didn't have course to teach" << std::endl;
+} 
+
+void Professor::askCourse() {
+    if (this->_currentCourse == nullptr) {
+        Headmaster master("thiery");
+        master.askFormnewCourse(FormType::TeachCourse, this);
+    }
+}
+
+void Professor::askGraduate() {
+    Headmaster master("thiery");
+    master.askFormGraduate(FormType::Graduate, this);
+}
+
+Professor::~Professor() {
+    if (this->_waitFill != nullptr)
+        delete _waitFill;
+    if (this->_waitFillGrad != nullptr)
+        delete _waitFillGrad;
+}
+
+Professor::Professor(std::string name) : Staff(name), _currentCourse(nullptr), _waitFill(nullptr), _waitFillGrad(nullptr) {};
+
+void Student::graduate(Course* p_course) {
+    for (int i = this->_subscribedCourse.size(); i > 0; i--) {
+        if (this->_subscribedCourse[i - 1] == p_course) {
+            p_course->unsub(this);
+            this->_subscribedCourse[i - 1] = nullptr;
+        }
+    }
 }

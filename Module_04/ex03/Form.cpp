@@ -81,7 +81,7 @@ void NeedCourseCreationForm::fill(std::string name) {
     this->_name = name;
     this->_courseList = CourseList::getInstance();
     this->_filled = true;
-}
+} 
 
 void NeedCourseCreationForm::execute() {
     if (this->_filled == true) {
@@ -117,7 +117,34 @@ void TeachCourseForm::execute() {
         for (long unsigned int i = 0; i < (*_list).size(); i++) {
             if ((*_list)[i] == this->_toSub) {
                 (*_list)[i]->assign(this->_stud);
-                std::cout << "Student subscribed" << std::endl;
+                std::cout << "Professor subscribed" << std::endl;
+                return;
+            }
+        }
+        std::cout << "Unknown course" <<std::endl;
+        return;
+    }
+    std::cout << "Form not complited" << std::endl;
+}
+
+void GraduateForm::fill(Course *course, Student *stud) {
+    this->_course = course;
+    this->_stud = stud;
+    CourseList *list = CourseList::getInstance();
+    this->_list = list->getList();
+    this->_filled = true;
+} 
+
+void FillGraduateForm::execute() {
+    this->_form->fill(this->_course, this->_stud);
+}
+
+void GraduateForm::execute() {
+    if (this->_filled == true) {
+        for (long unsigned int i = 0; i < (*_list).size(); i++) {
+            if ((*_list)[i] == this->_course) {
+                this->_stud->graduate(this->_course);
+                std::cout << "Student graduated" << std::endl;
                 return;
             }
         }
