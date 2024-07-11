@@ -74,57 +74,25 @@ void SubscriptionToCourseForm::execute() {
 }
 
 void FillNeedCourseCreationForm::execute() {
-    this->_form->fill(this->_name);
+    this->_form->fill(this->_name, this->_prof);
 }
 
-void NeedCourseCreationForm::fill(std::string name) {
+void NeedCourseCreationForm::fill(std::string name, Professor *prof) {
     this->_name = name;
     this->_courseList = CourseList::getInstance();
     this->_filled = true;
+    this->_prof = prof;
 } 
 
 void NeedCourseCreationForm::execute() {
     if (this->_filled == true) {
         Course *push = new Course(this->_name);
         this->_courseList->add(push);
+        push->assign(this->_prof);
         std::cout << "Course added to courses list" << std::endl;
         return;
     }
-    std::cout << "FoSubscriptionToCourseFormrm not complited" << std::endl;
-}
-
-FillTeachCourseForm::FillTeachCourseForm(TeachCourseForm *form, Course *toSub, Professor *stud) {
-    this->_form = form;
-    this->_toSub = toSub;
-    this->_stud = stud;
-    CourseList *list = CourseList::getInstance();
-    this->_list = list->getList();
-}
-
-void FillTeachCourseForm::execute() {
-    this->_form->fill(this->_list, this->_toSub, this->_stud);
-};
-
-void TeachCourseForm::fill(std::vector<Course *> *list, Course *toSub, Professor *stud) {
-    this->_list = list;
-    this->_toSub = toSub;
-    this->_stud = stud;
-    this->_filled = true;
-};
-
-void TeachCourseForm::execute() {
-    if (this->_filled == true) {
-        for (long unsigned int i = 0; i < (*_list).size(); i++) {
-            if ((*_list)[i] == this->_toSub) {
-                (*_list)[i]->assign(this->_stud);
-                std::cout << "Professor subscribed" << std::endl;
-                return;
-            }
-        }
-        std::cout << "Unknown course" <<std::endl;
-        return;
-    }
-    std::cout << "Form not complited" << std::endl;
+    std::cout << "FoSubscriptionToCourseForm not complited" << std::endl;
 }
 
 void GraduateForm::fill(Course *course, Student *stud) {

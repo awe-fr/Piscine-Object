@@ -12,7 +12,6 @@ enum class FormType
 	NeedMoreClassRoom,
 	NeedCourseCreation,
 	SubscriptionToCourse,
-    TeachCourse,
     Graduate
 };
 
@@ -31,10 +30,6 @@ class Form
 
         virtual void execute() = 0;
 };
-
-
-
-
 
 class GraduateForm : public Form
 {
@@ -59,12 +54,6 @@ class FillGraduateForm : public Form
         FillGraduateForm(GraduateForm *form, Course *course, Student *stud) : _form(form), _course(course), _stud(stud) {};
         void execute();
 };
-
-
-
-
-
-
 
 class CourseFinishedForm : public Form
 {
@@ -115,10 +104,11 @@ class NeedCourseCreationForm : public Form
     private:
         CourseList *_courseList;
         std::string _name;
+        Professor *_prof;
         bool _filled;
     public:
         NeedCourseCreationForm() : _filled(false) {};
-        void fill(std::string name);
+        void fill(std::string name, Professor *prof);
         void execute();
 };
 
@@ -127,8 +117,9 @@ class FillNeedCourseCreationForm : public Form
     private:
         NeedCourseCreationForm *_form;
         std::string _name;
+        Professor *_prof;
     public:
-        FillNeedCourseCreationForm(NeedCourseCreationForm *form, std::string name) : _form(form), _name(name) {};
+        FillNeedCourseCreationForm(NeedCourseCreationForm *form, std::string name, Professor *prof) : _form(form), _name(name), _prof(prof) {};
         void execute();
 };
 
@@ -155,30 +146,5 @@ class FillSubscriptionToCourseForm : public Form
         Student *_stud;
     public:
         FillSubscriptionToCourseForm(SubscriptionToCourseForm *form, Course *toSub, Student *stud);
-        void execute();
-};
-
-class TeachCourseForm : public Form
-{
-    private:
-        std::vector<Course *> *_list;
-        Course *_toSub;
-        Professor *_stud;
-        bool _filled;
-    public:
-        TeachCourseForm() : _filled(false) {};
-        void fill(std::vector<Course *> *list, Course *toSub, Professor *stud);
-        void execute();
-};
-
-class FillTeachCourseForm : public Form
-{
-    private:
-        TeachCourseForm *_form;
-        std::vector<Course *> *_list;
-        Course *_toSub;
-        Professor *_stud;
-    public:
-        FillTeachCourseForm(TeachCourseForm *form, Course *toSub, Professor *stud);
         void execute();
 };

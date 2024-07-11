@@ -28,3 +28,9 @@ void Course::unsub(Student *stud) {
         }
     }
 }
+
+void Course::studTakeNote() {
+    for (int i = this->_students.size(); i > 0; i--) {
+        this->_students[i - 1]->takeNote();
+    }
+}

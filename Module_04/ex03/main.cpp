@@ -7,26 +7,19 @@
 int main () {
     Secretary sec("Catherine");
     Headmaster hed("Didier");
-    NeedCourseCreationForm *f1 = (NeedCourseCreationForm *)sec.createForm(FormType::NeedCourseCreation);
-    FillNeedCourseCreationForm t1(f1, "trisonometrie");
-    hed.receiveForm(&t1);
-    hed.receiveForm(f1);
-    hed.exec();
-    CourseList *ex1 = CourseList::getInstance();
-    std::vector<Course *> *lst = ex1->getList();
-    Professor prof("Le s");
+    Professor prof("Seb");
     prof.askCourse();
-    prof.fillCourse((*lst)[0]);
+    prof.fillCourse("Math");
     prof.doClass();
+    CourseList *ex1 = CourseList::getInstance();
+    RoomList *ex2 = RoomList::getInstance();
+    std::vector<Course *> *lst = ex1->getList();
 
     std::cout << "------------------" << std::endl;
 
     Student *stud = new Student("Paul");
-    SubscriptionToCourseForm *f4 = (SubscriptionToCourseForm *)sec.createForm(FormType::SubscriptionToCourse);
-    FillSubscriptionToCourseForm t4(f4, (*lst)[0], stud);
-    hed.receiveForm(&t4);
-    hed.receiveForm(f4);
-    hed.exec();
+    stud->joinAsk();
+    stud->fill((*lst)[0]);
     prof.doClass();
     
     std::cout << "------------------" << std::endl;
@@ -34,15 +27,11 @@ int main () {
     prof.askGraduate();
     prof.fillGrad((*lst)[0], stud);
 
-    // GraduateForm *f2 = (GraduateForm *)sec.createForm(FormType::NeedCourseCreation);
-    // FillGraduateForm t2(f2, (*lst)[0], stud);
-
-
     std::cout << "------------------" << std::endl;
 
     ex1->cleanup();
+    ex2->cleanup();
     delete ex1;
-    delete f4;
+    delete ex2;
     delete stud;
-    delete f1;
 }

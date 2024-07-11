@@ -19,7 +19,7 @@ class Room
     public:
         Room(long long id) : ID(id) {};
         bool canEnter(Person*);
-        void enter(Person*);
+        void enter(Person *p) {this->_occupants.push_back(p);};
         void exit(Person*);
         
         void printOccupant();
@@ -31,7 +31,7 @@ class Classroom : public Room
         Course* _currentRoom;
     public:
         Classroom(long long id) : Room(id) {};
-        void assignCourse(Course* p_course);
+        void assignCourse(Course* p_course) {this->_currentRoom = p_course;};
 };
 
 class SecretarialOffice: public Room
