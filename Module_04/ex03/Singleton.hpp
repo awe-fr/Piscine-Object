@@ -77,3 +77,9 @@ class RoomList : public Singleton<RoomList, Room> {
 
     public:
 };
+
+class ProfessorList : public Singleton<ProfessorList, Professor> {
+    private:
+
+    public:
+};

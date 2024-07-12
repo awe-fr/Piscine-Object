@@ -28,7 +28,7 @@ private:
 	std::vector<Course*> _subscribedCourse;
 	SubscriptionToCourseForm * _waitFill;
 public:
-	Student(std::string p_name) : Person(p_name), _waitFill(nullptr) {};
+	Student(std::string p_name);
 	void attendClass(Classroom* p_classroom);
 	void exitClass();
 	void joinAsk();
@@ -61,6 +61,7 @@ public:
 	void askFormGraduate(FormType p_formType, Professor *asked);
 	void askFormjoinCourse(FormType p_formType, Student *asked);
 	void receiveForm(Form* p_form);
+	void attendClasses();
 	void exec();
 };
 

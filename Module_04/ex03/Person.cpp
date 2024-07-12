@@ -142,7 +142,11 @@ void Student::fill(Course *course) {
 }
 
 void Professor::doClass() {
-    if (this->_currentRoom == nullptr) {
+    if (this->_currentCourse == nullptr) {
+        this->askCourse();
+        return;
+    }
+    if (this->_currentRoom == nullptr && this->_currentCourse != nullptr) {
         askRoom();
         fillRoom();
         RoomList *ex1 = RoomList::getInstance();
@@ -187,7 +191,10 @@ Professor::~Professor() {
         delete _waitFillRoom;
 }
 
-Professor::Professor(std::string name) : Staff(name), _currentCourse(nullptr), _waitFill(nullptr), _waitFillGrad(nullptr), _waitFillRoom(nullptr) {};
+Professor::Professor(std::string name) : Staff(name), _currentCourse(nullptr), _waitFill(nullptr), _waitFillGrad(nullptr), _waitFillRoom(nullptr) {
+    ProfessorList *lst = ProfessorList::getInstance();
+    lst->add(this);
+};
 
 void Student::graduate(Course* p_course) {
     for (int i = this->_subscribedCourse.size(); i > 0; i--) {
@@ -217,4 +224,29 @@ Student::~Student() {
     if (this->_waitFill != nullptr) {
         delete this->_waitFill;
     }
+}
+
+void Headmaster::attendClasses() {
+    ProfessorList *ex1 = ProfessorList::getInstance();
+    std::vector<Professor *> *lst = ex1->getList();
+    for (int i = lst->size(); i > 0; i--) {
+        // Professor *tmp = (* lst)[i - 1]->getRes();
+        if ((* lst)[i - 1] != nullptr) {
+            (* lst)[i - 1]->doClass();
+        }
+    }
+
+    StudentList *ex2 = StudentList::getInstance();
+    std::vector<Student *> *lst2 = ex2->getList();
+    for (int i = lst2->size(); i > 0; i--) {
+        // Professor *tmp = (* lst)[i - 1]->getRes();
+        if ((* lst2)[i - 1] != nullptr) {
+            (* lst2)[i - 1]->joinAsk();
+        }
+    }
+}
+
+Student::Student(std::string p_name) : Person(p_name), _waitFill(nullptr) {
+    StudentList *lst = StudentList::getInstance();
+    lst->add(this);
 }

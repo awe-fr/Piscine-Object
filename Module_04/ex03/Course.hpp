@@ -18,4 +18,5 @@ class Course
         void unsub(Student *stud);
         void studTakeNote();
         std::string getName() {return _name;};
+        Professor* getRes() {if (_responsable != nullptr) {return _responsable;} return nullptr;};
 };
