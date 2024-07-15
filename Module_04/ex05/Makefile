@@ -1,9 +1,10 @@
-NAME = Mediator
+NAME = Facade
 
 SRCS = main.cpp\
 		Form.cpp\
 		Person.cpp\
-		Course.cpp
+		Course.cpp\
+		School.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

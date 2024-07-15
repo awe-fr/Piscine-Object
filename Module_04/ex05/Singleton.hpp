@@ -4,15 +4,17 @@
 #include "Course.hpp"
 #include "Room.hpp"
 
+class Staff;
+class Room;
+class Course;
+
 #include <iostream>
-#include <mutex>
 
 template <typename T, typename L>
 class Singleton {
     protected:
         static T *_instance;
         std::vector<L *> _list;
-        static std::mutex _mutex;
 
         Singleton() {std::cout << "Init Singleton list" << std::endl;};
         virtual ~Singleton() {std::cout << "Delete Singleton list" << std::endl;};
@@ -20,7 +22,6 @@ class Singleton {
         Singleton& operator=(const Singleton&) = delete;
     public:
         static T *getInstance() {
-            std::lock_guard<std::mutex> lock(_mutex);
             if (_instance == nullptr)
                 _instance = new T();
             return _instance;
@@ -34,6 +35,7 @@ class Singleton {
             if (toRm != nullptr) {
                 for (int i = this->_list.size(); i > 0; i--) {
                     if (this->_list[i - 1] == toRm) {
+                        delete toRm;
                         this->_list.erase(this->_list.begin() + i - 1);
                         std::cout << "Removed from list" << std::endl;
                         break;
@@ -51,9 +53,6 @@ class Singleton {
 
 template <typename T, typename L>
 T* Singleton<T, L>::_instance = nullptr;
-
-template <typename T, typename L>
-std::mutex Singleton<T, L>::_mutex;
 
 class StudentList : public Singleton<StudentList, Student> {
     private:
@@ -74,6 +73,12 @@ class CourseList : public Singleton<CourseList, Course> {
 };
 
 class RoomList : public Singleton<RoomList, Room> {
+    private:
+
+    public:
+};
+
+class ProfessorList : public Singleton<ProfessorList, Professor> {
     private:
 
     public:

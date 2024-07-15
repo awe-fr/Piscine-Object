@@ -1,4 +1,4 @@
-NAME = Factory
+NAME = Observer
 
 SRCS = main.cpp\
 		Form.cpp\

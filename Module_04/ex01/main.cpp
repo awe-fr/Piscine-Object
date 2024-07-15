@@ -30,6 +30,11 @@ int main () {
 
     testFonc(t1, t2, t3, t4);
 
+    delete s1;
+    delete s2;
+    delete s3;
+    delete s4;
+
     delete t1;
     delete t2;
     delete t3;
