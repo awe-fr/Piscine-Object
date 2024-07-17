@@ -6,7 +6,7 @@ class Rail {
     private:
         Node    *_a;
         Node    *_b;
-        int     _lenght;
+        float   _lenght;
     public:
-        Rail(Node *a, Node *b, int lenght);
+        Rail(Node *a, Node *b, float lenght);
 };
