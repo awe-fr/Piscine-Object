@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fstream>
+#include <bits/stdc++.h>
 
 #include "Event.hpp"
 #include "Node.hpp"
@@ -9,10 +10,11 @@
 #include "Singleton.hpp"
 
 void checkFile(char **filePath);
-void trainParsing(std::ifstream &file);
-void railParsing(std::ifstream &file);
-void nodeParsing(std::string line);
-void railParsing(std::string line);
-void eventParsing(std::string line);
+int trainParsing(std::ifstream &file);
+int systempParsing(std::ifstream &file);
+int nodeParsing(std::string line);
+int railParsing(std::string line);
+int railAssign(std::string nodeA,std::string nodeB, float lenght);
+int eventParsing(std::string line);
 
 void clearSingletons();

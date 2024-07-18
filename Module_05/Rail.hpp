@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Node.hpp"
+#include "Singleton.hpp"
+
+class Node;
 
 class Rail {
     private:

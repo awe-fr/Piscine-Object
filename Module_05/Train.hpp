@@ -2,6 +2,8 @@
 
 #include "Node.hpp"
 
+class Node;
+
 class Train {
     private:
         std::string _name;

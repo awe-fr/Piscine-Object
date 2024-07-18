@@ -8,6 +8,10 @@
 #include "Rail.hpp"
 #include "Train.hpp"
 
+class Event;
+class Rail;
+class Train;
+
 template <typename T, typename L>
 class Singleton {
     protected:
@@ -59,6 +63,18 @@ class NodeList : public Singleton<NodeList, Node> {
 };
 
 class TrainList : public Singleton<TrainList, Train> {
+    private:
+
+    public:
+};
+
+class RailList : public Singleton<RailList, Rail> {
+    private:
+
+    public:
+};
+
+class EventList : public Singleton<EventList, Event> {
     private:
 
     public:

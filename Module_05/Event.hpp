@@ -2,6 +2,8 @@
 
 #include "Node.hpp"
 
+class Node;
+
 class Event {
     private:
         std::string _reason;
