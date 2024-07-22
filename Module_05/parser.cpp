@@ -17,8 +17,8 @@ void checkFile(char **filePath) {
         clearSingletons();
     }
 
-    trainFile.close(); //leak psq pas close si mauvais input
-    railFile.close(); //leak psq pas close si mauvais input
+    trainFile.close();
+    railFile.close();
     return;
 }
 
@@ -116,7 +116,16 @@ int railAssign(std::string nodeA,std::string nodeB, float lenght) {
 }
 
 int eventParsing(std::string line) {
-    
+    std::string event;
+    std::string rates;
+    std::string times;
+    std::string node;
+    float rate = 0;
+    float time = 0;
+    int i = 6;
+
+
+
     return 0;
 }
 
