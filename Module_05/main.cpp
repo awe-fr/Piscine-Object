@@ -7,4 +7,5 @@ int main(int ac, char **av) {
     }
     checkFile(av);
     clearSingletons();
+    return 0;
 }

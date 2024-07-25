@@ -16,5 +16,8 @@ int nodeParsing(std::string line);
 int railParsing(std::string line);
 int railAssign(std::string nodeA,std::string nodeB, float lenght);
 int eventParsing(std::string line);
+int eventAssign(std::string reason, float rate, float time, std::string node);
+int trainCut(std::string line);
+int trainAssign(std::string name, std::string a, std::string b, float acc, float brake, float hour);
 
 void clearSingletons();
