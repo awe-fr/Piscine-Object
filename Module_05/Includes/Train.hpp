@@ -14,4 +14,6 @@ class Train {
         float       _departureHour;
     public:
         Train(std::string name, Node *a, Node *b, float acc, float brake, float departure);
+        Node *getDeparture();
+        Node *getArrival();
 };

@@ -1,4 +1,4 @@
-#include "Header.h"
+#include "./../Includes/Header.h"
 
 void checkFile(char **filePath) {
     std::ifstream trainFile(filePath[1]);

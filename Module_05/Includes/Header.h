@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <bits/stdc++.h>
+#include <map>
 
 #include "Event.hpp"
 #include "Node.hpp"
@@ -19,5 +20,8 @@ int eventParsing(std::string line);
 int eventAssign(std::string reason, float rate, float time, std::string node);
 int trainCut(std::string line);
 int trainAssign(std::string name, std::string a, std::string b, float acc, float brake, float hour);
+
+void assignTravel();
+void findPath(Train *train);
 
 void clearSingletons();

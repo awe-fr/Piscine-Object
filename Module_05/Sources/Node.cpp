@@ -1,4 +1,4 @@
-#include "Node.hpp"
+#include "./../Includes/Node.hpp"
 
 Node::Node(std::string name) : _name(name) {
     NodeList *lst = NodeList::getInstance();
