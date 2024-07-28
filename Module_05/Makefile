@@ -12,7 +12,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 CC = c++
 
-CFLAGS = #-Wall -Werror -Wextra -g
+CFLAGS = -g #-Wall -Werror -Wextra -g
 RM = rm -f
 
 all:			$(NAME)

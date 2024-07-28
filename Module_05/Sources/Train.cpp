@@ -13,3 +13,11 @@ Node *Train::getDeparture() {
 Node *Train::getArrival() {
     return(this->_arrival);
 }
+
+void Train::addSegment(Rail *rail) {
+    this->_path.push_back(rail);
+}
+
+std::string Train::getName() {
+    return (this->_name);
+}

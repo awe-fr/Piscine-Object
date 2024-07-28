@@ -17,7 +17,22 @@ int main(int ac, char **av) {
 void assignTravel() {
     TrainList *obj = TrainList::getInstance();
     std::vector<Train *> *lst = obj->getList();
-    findPath((* lst)[0]);
+    for (int i = 0; i < lst->size(); i++)
+        findPath((* lst)[i]);
+}
+
+Rail *getRail(Node *a, Node *b) {
+    RailList *obj1 = RailList::getInstance();
+    std::vector<Rail *> *lstR = obj1->getList();
+    for (int i = 0; i < lstR->size(); i++) {
+        if (a == (* lstR)[i]->getStart() && b == (* lstR)[i]->getArrival()) {
+            return ((* lstR)[i]);
+        }
+        else if (b == (* lstR)[i]->getStart() && a == (* lstR)[i]->getArrival()) {
+            return ((* lstR)[i]);
+        }
+    }
+    return nullptr;
 }
 
 void findPath(Train *train) {
@@ -76,18 +91,18 @@ void findPath(Train *train) {
         }
         pinned[toTreat] = 1;
     }
-    std::cout << end->getName() << std::endl;
-    Node *un = quick[end];
-    std::cout << un->getName() << std::endl;
-    un = quick[un];
-    std::cout << un->getName() << std::endl;
-    un = quick[un];
-    std::cout << un->getName() << std::endl;
-
-
-    for (int i = 0; i < lstN->size(); i++) {
-        std::map<Node *, float>::iterator itd = distances.begin();
-        std::cout << distances[(* lstN)[i]] << std::endl;
-        ++itd;
+    if (pinned[end] != 1) {
+        std::cerr << "No travel founded : " << train->getName() << std::endl;
+        quick.clear();
+        distances.clear();
+        pinned.clear();
+        clearSingletons();
+    }
+    Node *un = end;
+    Node *deux = quick[end];
+    while(un != deux) {
+        train->addSegment(getRail(un, deux));
+        un = deux;
+        deux = quick[deux];
     }
 }

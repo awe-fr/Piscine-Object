@@ -23,5 +23,6 @@ int trainAssign(std::string name, std::string a, std::string b, float acc, float
 
 void assignTravel();
 void findPath(Train *train);
+Rail *getRail(Node *a, Node *b);
 
 void clearSingletons();

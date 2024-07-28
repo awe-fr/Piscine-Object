@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Node.hpp"
+#include "Rail.hpp"
 
 class Node;
+class Rail;
 
 class Train {
     private:
+        std::vector<Rail *> _path;
         std::string _name;
         Node        *_departure;
         Node        *_arrival;
@@ -16,4 +19,6 @@ class Train {
         Train(std::string name, Node *a, Node *b, float acc, float brake, float departure);
         Node *getDeparture();
         Node *getArrival();
+        void addSegment(Rail *rail);
+        std::string getName();
 };
