@@ -9,6 +9,8 @@
 #include "Rail.hpp"
 #include "Train.hpp"
 #include "Singleton.hpp"
+#include "Clock.hpp"
+#include "Simulation.hpp"
 
 void checkFile(char **filePath);
 int trainParsing(std::ifstream &file);

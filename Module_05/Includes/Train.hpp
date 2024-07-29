@@ -21,4 +21,8 @@ class Train {
         Node *getArrival();
         void addSegment(Rail *rail);
         std::string getName();
+		float getSpeed();
+		float getBrake();
+		int railNumber();
+		float railLenght();
 };

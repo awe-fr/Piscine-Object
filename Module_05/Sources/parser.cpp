@@ -149,7 +149,7 @@ int eventParsing(std::string line) {
     }
     i++;
     while(line[i] != '\0' && line[i] != ' ' && line[i] != '\n') {
-        if ((line[i] >= '0' && line[i] <= '9') || line[i] == '.') {
+        if ((line[i] >= '0' && line[i] <= '9')) {
             timeS += line[i];
         }
         else if (line[i] == 'm')

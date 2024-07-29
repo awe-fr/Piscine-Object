@@ -21,3 +21,23 @@ void Train::addSegment(Rail *rail) {
 std::string Train::getName() {
     return (this->_name);
 }
+
+float Train::getSpeed() {
+	return (this->_maxAcceleration);
+}
+
+float Train::getBrake() {
+	return (this->_maxBrakeForce);
+}
+
+int Train::railNumber() {
+	return (this->_path.size());
+}
+
+float Train::railLenght() {
+	float lenght;
+	for (int i = 0; i < _path.size(); i++) {
+		lenght += this->_path[i]->getLenght();
+	}
+	return lenght;
+}

@@ -7,6 +7,8 @@ SRCS = Sources/main.cpp\
 		Sources/parser.cpp\
 		Sources/Rail.cpp\
 		Sources/Train.cpp\
+		Sources/Clock.cpp\
+		Sources/Simulation.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 

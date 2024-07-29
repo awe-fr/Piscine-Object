@@ -9,6 +9,8 @@ int main(int ac, char **av) {
 
     assignTravel();
 
+    Simulation *sim = new Simulation();
+	sim->StartSimulation();
 
     clearSingletons();
     return 0;
