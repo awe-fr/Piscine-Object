@@ -61,8 +61,20 @@ int nodeParsing(std::string line) {
         seg += line[i];
     if (line.size() > seg.size() + 5)
         return 1;
+	if (checkNode(seg) == 1)
+		return 1;
     Node *node = new Node(seg);
     return 0;
+}
+
+int checkNode(std::string name) {
+	NodeList *nodes = NodeList::getInstance();
+    std::vector<Node *> *lst = nodes->getList();
+    for (int i = 0; i < lst->size(); i ++) {
+        if ((* lst)[i]->getName() == name)
+            return 1;
+    }
+	return 0;
 }
 
 int railParsing(std::string line) {
@@ -91,7 +103,7 @@ int railParsing(std::string line) {
     }
     if (!lenghtS.empty())
         lenght = std::stof(lenghtS);
-    if (lenght < 0 || nodeA.empty() || nodeB.empty() || (line.size() > i))
+    if (lenght <= 0 || nodeA.empty() || nodeB.empty() || (line.size() > i))
         return 1;
     if (railAssign(nodeA, nodeB, lenght) == 1)
         return 1;
@@ -277,6 +289,8 @@ int trainCut(std::string line) {
 }
 
 int trainAssign(std::string name, std::string a, std::string b, float acc, float brake, float hour) {
+	if (a == b)
+		return 1;
     int aNum = -1;
     int bNum = -1;
     NodeList *nodes = NodeList::getInstance();

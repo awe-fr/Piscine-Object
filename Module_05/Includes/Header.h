@@ -16,6 +16,7 @@ void checkFile(char **filePath);
 int trainParsing(std::ifstream &file);
 int systempParsing(std::ifstream &file);
 int nodeParsing(std::string line);
+int checkNode(std::string name);
 int railParsing(std::string line);
 int railAssign(std::string nodeA,std::string nodeB, float lenght);
 int eventParsing(std::string line);

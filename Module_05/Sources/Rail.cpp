@@ -1,6 +1,6 @@
 #include "./../Includes/Rail.hpp"
 
-Rail::Rail(Node *a, Node *b, float lenght) : _a(a), _b(b), _lenght(lenght), _maxSpeed(350) {
+Rail::Rail(Node *a, Node *b, float lenght) : _a(a), _b(b), _lenght(lenght), _maxSpeed(200) {
     RailList *lst = RailList::getInstance();
     lst->add(this);
 }

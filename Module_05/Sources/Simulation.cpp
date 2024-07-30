@@ -21,7 +21,7 @@ void Simulation::printEstimateTime() {
 		float vmax = this->_rails[0]->getSpeed() / 3.6;
 		float meter = 0;
 		int sec = 0;
-		for (float start = this->_trains[i]->getSpeed(); start < vmax; start += this->_trains[i]->getSpeed()) {
+		for (float start = this->_trains[i]->getAcc(); start < vmax; start += this->_trains[i]->getAcc()) {
 			sec += 1;
 			meter += start;
 		}
@@ -35,7 +35,7 @@ void Simulation::printEstimateTime() {
 		sec2 *= this->_trains[i]->railNumber();
 		int min = sec / 60;
 		int min2 = sec2 / 60;
-		int time = (((this->_trains[i]->railLenght() - (meter / 1000) - (meter2 / 1000)) / this->_rails[0]->getSpeed()) * 100) + min + min2;
+		int time = (((this->_trains[i]->railLenght() - (((meter / 1000) - (meter2 / 1000)) * this->_trains[i]->railNumber())) / this->_rails[0]->getSpeed()) * 100) + min + min2;
         std::cout << "Train : " << this->_trains[i]->getName() << std::endl;
 		std::cout << "Estimated optimal travel time : " << time / 100 << "h" << ((time % 100) * 60) / 100 << "m" << std::endl;
 		std::cout << std::endl; 
@@ -45,7 +45,12 @@ void Simulation::printEstimateTime() {
 void Simulation::exec() {
 	while (!this->_trains.empty()) {
 		for (int i = 0; i < this->_trains.size(); i++) {
-			
+			if (this->_trains[i]->getStatus() == "Start") {
+				if (this->_clock->getHour() == this->_trains[i]->getHour()) {
+					std::cout << "test" << " " << this->_clock->getHour() << " " << this->_trains[i]->getHour() << std::endl;
+					
+				}
+			}
 		}
 		this->_clock->passTime();
 	}

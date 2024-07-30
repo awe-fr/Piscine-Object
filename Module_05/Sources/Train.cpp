@@ -1,6 +1,6 @@
 #include "./../Includes/Train.hpp"
 
-Train::Train(std::string name, Node *a, Node *b, float acc, float brake, float departure) : _name(name) , _departure(a), _arrival(b), _maxAcceleration(acc), _maxBrakeForce(brake), _departureHour(departure) {
+Train::Train(std::string name, Node *a, Node *b, float acc, float brake, float departure) : _name(name) , _departure(a), _arrival(b), _maxAcceleration(acc), _maxBrakeForce(brake), _departureHour(departure), _status("Start") {
     TrainList *lst = TrainList::getInstance();
     lst->add(this);
 }
@@ -22,7 +22,7 @@ std::string Train::getName() {
     return (this->_name);
 }
 
-float Train::getSpeed() {
+float Train::getAcc() {
 	return (this->_maxAcceleration);
 }
 
@@ -40,4 +40,20 @@ float Train::railLenght() {
 		lenght += this->_path[i]->getLenght();
 	}
 	return lenght;
+}
+
+float Train::getSpeed() {
+	return this->_speed;
+}
+
+std::string Train::getStatus() {
+	return this->_status;
+}
+
+void Train::setStatus(std::string status) {
+	this->_status = status;
+}
+
+float Train::getHour() {
+	return this->_departureHour;
 }

@@ -13,17 +13,17 @@ Event "Passenger's Discomfort" 0.2 30m CityA
 Event "Passenger's Discomfort" 0.2 30m CityB
 Event "Passenger's Discomfort" 0.2 30m CityC
 Event "Can't happen" 0 356d CityA
-Rail CityA RailNodeA 1500.0
-Rail RailNodeA RailNodeB 20.0
-Rail RailNodeB RailNodeC 13.0
-Rail RailNodeC CityB 5.0
-Rail CityB RailNodeD 7.0
-Rail RailNodeD RailNodeE 12.0
-Rail RailNodeE CityC 6.0
-Rail CityA RailNodeF 600.0
-Rail RailNodeF RailNodeG 17.0
-Rail RailNodeG CityC 17.0
-Rail RailNodeA RailNodeD 23.02
-Rail RailNodeA RailNodeE 19.0
-Rail RailNodeA RailNodeG 6.7
-Rail RailNodeB RailNodeD 20.24
+Rail CityA RailNodeA 150.0
+Rail RailNodeA RailNodeB 200.0
+Rail RailNodeB RailNodeC 130.0
+Rail RailNodeC CityB 50.0
+Rail CityB RailNodeD 70.0
+Rail RailNodeD RailNodeE 120.0
+Rail RailNodeE CityC 60.0
+Rail CityA RailNodeF 60.0
+Rail RailNodeF RailNodeG 170.0
+Rail RailNodeG CityC 170.0
+Rail RailNodeA RailNodeD 230.02
+Rail RailNodeA RailNodeE 190.0
+Rail RailNodeA RailNodeG 60.7
+Rail RailNodeB RailNodeD 200.24
