@@ -35,7 +35,7 @@ int Train::railNumber() {
 }
 
 float Train::railLenght() {
-	float lenght;
+	float lenght = 0;
 	for (int i = 0; i < _path.size(); i++) {
 		lenght += this->_path[i]->getLenght();
 	}

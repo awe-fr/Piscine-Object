@@ -13,6 +13,7 @@ Simulation::Simulation() {
     NodeList *plst4 = NodeList::getInstance();
     std::vector<Node *> *lst4 = plst4->getList();
     this->_nodes = *lst4;
+	this->_clock = new Clock();
 }
 
 void Simulation::printEstimateTime() {
@@ -36,11 +37,21 @@ void Simulation::printEstimateTime() {
 		int min2 = sec2 / 60;
 		int time = (((this->_trains[i]->railLenght() - (meter / 1000) - (meter2 / 1000)) / this->_rails[0]->getSpeed()) * 100) + min + min2;
         std::cout << "Train : " << this->_trains[i]->getName() << std::endl;
-		std::cout << "Estimated optimal travel time : " << time / 60 << "h" << time % 60 << "m" << std::endl;
-		std::cout << std::endl;
+		std::cout << "Estimated optimal travel time : " << time / 100 << "h" << ((time % 100) * 60) / 100 << "m" << std::endl;
+		std::cout << std::endl; 
     }
+}
+
+void Simulation::exec() {
+	while (!this->_trains.empty()) {
+		for (int i = 0; i < this->_trains.size(); i++) {
+			
+		}
+		this->_clock->passTime();
+	}
 }
 
 void Simulation::StartSimulation() {
 	printEstimateTime();
+	exec();
 }
