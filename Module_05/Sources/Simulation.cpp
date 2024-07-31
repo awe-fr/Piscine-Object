@@ -45,11 +45,38 @@ void Simulation::printEstimateTime() {
 void Simulation::exec() {
 	while (!this->_trains.empty()) {
 		for (int i = 0; i < this->_trains.size(); i++) {
-			if (this->_trains[i]->getStatus() == "Start") {
-				if (this->_clock->getHour() == this->_trains[i]->getHour()) {
-					std::cout << "test" << " " << this->_clock->getHour() << " " << this->_trains[i]->getHour() << std::endl;
-					
+			if (this->_trains[i]->getStatus() == "Starting" && this->_clock->getHour() == this->_trains[i]->getHour()) {
+					printTrainStatus(i);
+					this->_trains[i]->setStatus("Speed up");
+			}
+			if (this->_trains[i]->getStatus() == "Speed up") {
+				float tmpSpeed = this->_trains[i]->getSpeed() / 3.6;
+				float vmax = this->_rails[0]->getSpeed() / 3.6;
+				float mtr = this->_trains[i]->getTraveled() * 1000;
+				for (int y = 0; y < 60; y++) {
+					if (tmpSpeed < vmax)
+						tmpSpeed += this->_trains[i]->getAcc();
+					else if (tmpSpeed > vmax)
+						tmpSpeed = vmax;
+					mtr += tmpSpeed;
 				}
+				if (tmpSpeed == vmax) {
+					this->_trains[i]->setStatus("Maintain");
+
+				}
+				this->_trains[i]->setTraveled(mtr / 1000);
+				this->_trains[i]->setSpeed(tmpSpeed * 3.6);
+			}
+			if (this->_trains[i]->getStatus() == "Maintain") {
+				float tmpSpeed = this->_trains[i]->getSpeed() / 3.6;
+				float mtr = this->_trains[i]->getTraveled() * 1000;
+				for (int y = 0; y < 60; y++) {
+					mtr += tmpSpeed;
+				}
+				this->_trains[i]->setTraveled(mtr / 1000);
+			}
+			if (this->_clock->getHour() % 5 == 0 && this->_trains[i]->getStatus() != "Starting") {
+				printTrainStatus(i);
 			}
 		}
 		this->_clock->passTime();
@@ -59,4 +86,13 @@ void Simulation::exec() {
 void Simulation::StartSimulation() {
 	printEstimateTime();
 	exec();
+}
+
+void Simulation::printTrainStatus(int i) {
+	std::cout << "[" << this->_clock->getHour() / 100 << "h" << this->_clock->getHour() % 100 << "] - [";
+	std::cout << this->_trains[i]->getRail()->getStart()->getName() << "][" << this->_trains[i]->getRail()->getArrival()->getName() << "] - [";
+	std::cout << this->_trains[i]->getRail()->getLenght() - this->_trains[i]->getTraveled() << "km] - [";
+	std::cout << this->_trains[i]->getStatus() << "] - ";
+	std::cout << this->_trains[i]->getRail()->getTrafic(this->_trains[i]);
+	std::cout << std::endl;
 }

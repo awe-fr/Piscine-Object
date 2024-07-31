@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Node.hpp"
-#include "Singleton.hpp"
+#include "Header.h"
 
 class Node;
+class Train;
 
 class Rail {
     private:
@@ -17,4 +17,6 @@ class Rail {
         Node *getArrival();
 		float   getSpeed();
         float   getLenght();
+        std::string getTrafic(Train *train);
+        std::string cutTrafic(std::string line);
 };

@@ -2,6 +2,10 @@
 
 #include "Header.h"
 
+class Event;
+class Train;
+class Rail;
+
 class Simulation {
     private:
         std::vector<Train *> _trains;
@@ -14,4 +18,5 @@ class Simulation {
 		void StartSimulation();
         void printEstimateTime();
         void exec();
+        void printTrainStatus(int i);
 };

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <bits/stdc++.h>
 #include <map>
+#include <cmath>
 
 #include "Event.hpp"
 #include "Node.hpp"
@@ -11,6 +12,11 @@
 #include "Singleton.hpp"
 #include "Clock.hpp"
 #include "Simulation.hpp"
+
+class Train;
+class Rail;
+class Node;
+class Event;
 
 void checkFile(char **filePath);
 int trainParsing(std::ifstream &file);
