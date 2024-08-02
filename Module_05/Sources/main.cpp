@@ -30,9 +30,6 @@ Rail *getRail(Node *a, Node *b) {
         if (a == (* lstR)[i]->getStart() && b == (* lstR)[i]->getArrival()) {
             return ((* lstR)[i]);
         }
-        else if (b == (* lstR)[i]->getStart() && a == (* lstR)[i]->getArrival()) {
-            return ((* lstR)[i]);
-        }
     }
     return nullptr;
 }
@@ -103,8 +100,8 @@ void findPath(Train *train) {
     Node *un = end;
     Node *deux = quick[end];
     while(un != deux) {
-        train->addSegment(getRail(un, deux));
-        un = deux;
+        train->addSegment(getRail(deux, un));
+        un = quick[un];
         deux = quick[deux];
     }
 }

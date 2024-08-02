@@ -26,6 +26,7 @@ class Train {
         Node *getArrival();
         Node *getDeparture();
 		int railNumber();
+        int changeRail();
         void setSpeed(float value);
         void addSegment(Rail *rail);
         void setTraveled(float value);

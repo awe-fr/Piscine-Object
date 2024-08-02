@@ -19,4 +19,5 @@ class Simulation {
         void printEstimateTime();
         void exec();
         void printTrainStatus(int i);
+        float getTimeToStop(Train *train, float speed);
 };

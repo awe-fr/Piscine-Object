@@ -12,7 +12,7 @@ class Rail {
         float   _lenght;
 		float	_maxSpeed;
     public:
-        Rail(Node *a, Node *b, float lenght);
+        Rail(Node *a, Node *b, float lenght, int first);
         Node *getStart();
         Node *getArrival();
 		float   getSpeed();

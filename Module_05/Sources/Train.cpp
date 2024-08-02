@@ -73,3 +73,11 @@ void Train::setTraveled(float value) {
 void Train::setSpeed(float value) {
 	this->_speed = value;
 }
+
+int Train::changeRail() {
+	if (this->_path.size() > 1) {
+		this->_path.pop_back();
+		return 1;
+	}
+	return 0;
+}

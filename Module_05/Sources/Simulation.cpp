@@ -59,6 +59,12 @@ void Simulation::exec() {
 					else if (tmpSpeed > vmax)
 						tmpSpeed = vmax;
 					mtr += tmpSpeed;
+					if (this->_trains[i]->getRail()->getLenght() - (mtr / 1000) <= getTimeToStop(this->_trains[i], tmpSpeed) / 1000) {
+						this->_trains[i]->setTraveled(mtr / 1000);
+						this->_trains[i]->setSpeed(tmpSpeed * 3.6);
+						this->_trains[i]->setStatus("Braking");
+						break;
+					}
 				}
 				if (tmpSpeed == vmax) {
 					this->_trains[i]->setStatus("Maintain");
@@ -67,14 +73,59 @@ void Simulation::exec() {
 				this->_trains[i]->setTraveled(mtr / 1000);
 				this->_trains[i]->setSpeed(tmpSpeed * 3.6);
 			}
-			if (this->_trains[i]->getStatus() == "Maintain") {
+			else if (this->_trains[i]->getStatus() == "Maintain") {
 				float tmpSpeed = this->_trains[i]->getSpeed() / 3.6;
 				float mtr = this->_trains[i]->getTraveled() * 1000;
 				for (int y = 0; y < 60; y++) {
 					mtr += tmpSpeed;
+					if (this->_trains[i]->getRail()->getLenght() - (mtr / 1000) <= getTimeToStop(this->_trains[i], tmpSpeed) / 1000) {
+						this->_trains[i]->setTraveled(mtr / 1000);
+						this->_trains[i]->setStatus("Braking");
+						break;
+					}
 				}
 				this->_trains[i]->setTraveled(mtr / 1000);
 			}
+			else if (this->_trains[i]->getStatus() == "Braking") {
+				float tmpSpeed = this->_trains[i]->getSpeed() / 3.6;
+				float mtr = this->_trains[i]->getTraveled() * 1000;
+				for (int y = 0; y < 60; y++) {
+					if (this->_trains[i]->getRail()->getLenght() - (mtr / 1000) < 0) {
+						mtr = this->_trains[i]->getRail()->getLenght() * 1000;
+					}
+					if (this->_trains[i]->getRail()->getLenght() - (mtr / 1000) == 0) {
+						this->_trains[i]->setTraveled(mtr / 1000);
+						this->_trains[i]->setSpeed(0);
+						this->_trains[i]->setStatus("Stopped");
+						break;
+					}
+					mtr += tmpSpeed;
+					if (tmpSpeed * 3.6 > 10)
+						tmpSpeed -= this->_trains[i]->getBrake();
+					else if (tmpSpeed * 3.6 < 10)
+						tmpSpeed = 10 / 3.6;
+				}
+				this->_trains[i]->setTraveled(mtr / 1000);
+				this->_trains[i]->setSpeed(tmpSpeed * 3.6);
+			}
+			if (this->_trains[i]->getStatus() == "Stopped") {
+				if (this->_trains[i]->changeRail() == 1) {
+					this->_trains[i]->setTraveled(0);
+					this->_trains[i]->setStatus("Speed up");
+				}
+			}
+		}
+		for (int i = 0; i < this->_trains.size(); i++) {
+			if (this->_trains[i]->getStatus() == "Stopped") {
+				for (int z = this->_trains.size(); z > 0; z--) {
+					if (this->_trains[z - 1] == this->_trains[i]) {
+						printTrainStatus(i);
+						this->_trains.erase(this->_trains.begin() + z - 1);
+					}
+				}
+			}
+		}
+		for (int i = 0; i < this->_trains.size(); i++) {
 			if (this->_clock->getHour() % 5 == 0 && this->_trains[i]->getStatus() != "Starting") {
 				printTrainStatus(i);
 			}
@@ -90,9 +141,20 @@ void Simulation::StartSimulation() {
 
 void Simulation::printTrainStatus(int i) {
 	std::cout << "[" << this->_clock->getHour() / 100 << "h" << this->_clock->getHour() % 100 << "] - [";
+	std::cout << this->_trains[i]->getName() << "] - [";
 	std::cout << this->_trains[i]->getRail()->getStart()->getName() << "][" << this->_trains[i]->getRail()->getArrival()->getName() << "] - [";
 	std::cout << this->_trains[i]->getRail()->getLenght() - this->_trains[i]->getTraveled() << "km] - [";
 	std::cout << this->_trains[i]->getStatus() << "] - ";
 	std::cout << this->_trains[i]->getRail()->getTrafic(this->_trains[i]);
 	std::cout << std::endl;
+}
+
+float Simulation::getTimeToStop(Train *train, float speed) {
+	float brakeForce = train->getBrake();
+	float mtr = 0;
+	while(speed > 0) {
+		mtr += speed;
+		speed -= brakeForce;
+	}
+	return mtr;
 }

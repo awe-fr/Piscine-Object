@@ -1,8 +1,10 @@
 #include "./../Includes/Rail.hpp"
 
-Rail::Rail(Node *a, Node *b, float lenght) : _a(a), _b(b), _lenght(lenght), _maxSpeed(200) {
+Rail::Rail(Node *a, Node *b, float lenght, int first) : _a(a), _b(b), _lenght(lenght), _maxSpeed(200) {
     RailList *lst = RailList::getInstance();
     lst->add(this);
+    if (first == 1)
+        Rail *rail = new Rail(b, a, lenght, 0);
 }
 
 Node *Rail::getStart() {
@@ -31,11 +33,15 @@ std::string Rail::getTrafic(Train *train) {
     for (int i = 0; i < lst->size(); i++) {
         if ((* lst)[i]->getRail() == this) {
             int pos = (int)std::trunc((* lst)[i]->getTraveled());
+            if(pos < 0 || pos >this->_lenght)
+                pos = 0;
             pos *= 3; pos += 1;
             line[pos] = 'O';
         }
     }
     int posA = (int)std::trunc(train->getTraveled());
+    if(posA < 0 || posA >this->_lenght)
+        posA = 0;
     posA *= 3; posA += 1;
     line[posA] = 'X';
     line = cutTrafic(line);

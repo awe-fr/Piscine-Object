@@ -123,7 +123,7 @@ int railAssign(std::string nodeA,std::string nodeB, float lenght) {
     }
     if (aNum == -1 || bNum == -1)
         return 1;
-    Rail *rail = new Rail((* lst)[aNum], (* lst)[bNum], lenght);
+    Rail *rail = new Rail((* lst)[aNum], (* lst)[bNum], lenght, 1);
     return 0;
 }
 
