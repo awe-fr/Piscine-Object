@@ -111,8 +111,16 @@ void Simulation::exec() {
 			if (this->_trains[i]->getStatus() == "Stopped") {
 				if (this->_trains[i]->changeRail() == 1) {
 					this->_trains[i]->setTraveled(0);
-					this->_trains[i]->setStatus("Speed up");
+					if (this->_trains[i]->loadEvent(this->_trains[i]->getRail()->getStart(), this->_events) == 1)
+						this->_trains[i]->setStatus("Event");
+					else
+						this->_trains[i]->setStatus("Speed up");
 				}
+			}
+			else if (this->_trains[i]->getStatus() == "Event") {
+				this->_trains[i]->subTime();
+				if (this->_trains[i]->getTime() == 0)
+					this->_trains[i]->setStatus("Speed up");
 			}
 		}
 		for (int i = 0; i < this->_trains.size(); i++) {

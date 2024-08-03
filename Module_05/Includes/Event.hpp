@@ -12,4 +12,8 @@ class Event {
         float       _time;
     public:
         Event(std::string reason, Node *location, float prob, float time);
+        std::string getReason();
+        Node *getLoc();
+        float getProb();
+        float getTime();
 };

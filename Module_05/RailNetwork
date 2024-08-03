@@ -12,6 +12,13 @@ Event Riot 0.05 48h CityA
 Event "Passenger's Discomfort" 0.2 30m CityA
 Event "Passenger's Discomfort" 0.2 30m CityB
 Event "Passenger's Discomfort" 0.2 30m CityC
+Event "Passenger's Discomfort" 0.2 30m RailNodeA
+Event "Passenger's Discomfort" 0.2 30m RailNodeB
+Event "Passenger's Discomfort" 0.2 30m RailNodeC
+Event "Passenger's Discomfort" 0.2 30m RailNodeD
+Event "Passenger's Discomfort" 0.2 30m RailNodeE
+Event "Passenger's Discomfort" 0.2 30m RailNodeF
+Event "Passenger's Discomfort" 0.2 30m RailNodeG
 Event "Can't happen" 0 356d CityA
 Rail CityA RailNodeA 150.01
 Rail RailNodeA RailNodeB 200.0

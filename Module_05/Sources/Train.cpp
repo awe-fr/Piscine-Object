@@ -1,8 +1,9 @@
 #include "./../Includes/Train.hpp"
 
-Train::Train(std::string name, Node *a, Node *b, float acc, float brake, float departure) : _name(name) , _departure(a), _arrival(b), _maxAcceleration(acc), _maxBrakeForce(brake), _departureHour(departure), _status("Starting"), _speed(0), _traveled(0) {
+Train::Train(std::string name, Node *a, Node *b, float acc, float brake, float departure) : _name(name) , _departure(a), _arrival(b), _maxAcceleration(acc), _maxBrakeForce(brake), _departureHour(departure), _status("Starting"), _speed(0), _traveled(0), _time(0) {
     TrainList *lst = TrainList::getInstance();
     lst->add(this);
+	this->_id = lst->getList()->size();
 }
 
 Node *Train::getDeparture() {
@@ -80,4 +81,35 @@ int Train::changeRail() {
 		return 1;
 	}
 	return 0;
+}
+
+int Train::loadEvent(Node *node, std::vector<Event *> events) {
+	std::vector<Event *> lst;
+	int ret = 0;
+	for (int i = 0; i < events.size(); i++) {
+		if (events[i]->getLoc()->getName() == node->getName()) {
+			lst.push_back(events[i]);
+		}
+	}
+	std::srand(time(0));
+	for (int i = 0; i < lst.size(); i++) {
+		int prob = 1 / lst[i]->getProb();
+		int num = std::rand();
+		if (num % prob == 0) {
+			if (this->_time < lst[i]->getTime()) {
+				this->_time = lst[i]->getTime();
+			}
+			std::cout << "[" << this->_name << "] trigger a " << lst[i]->getReason() << " in " << node->getName() << " train stopped for " << this->_time << " minutes"<< std::endl;
+			ret = 1;
+		}
+	}
+	return ret;
+}
+
+float Train::getTime() {
+	return this->_time;
+}
+
+void Train::subTime() {
+	this->_time -= 1;
 }
