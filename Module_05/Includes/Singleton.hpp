@@ -39,7 +39,6 @@ class Singleton {
                     if (this->_list[i - 1] == toRm) {
                         delete toRm;
                         this->_list.erase(this->_list.begin() + i - 1);
-                        // std::cout << "Removed from list" << std::endl;
                         break;
                     }
                 }
@@ -49,7 +48,6 @@ class Singleton {
             for (int i = this->_list.size(); i > 0; i--) {
                 delete this->_list[i - 1];
             }
-            // std::cout << "Singleton cleanup" << std::endl;
         }
 };
 

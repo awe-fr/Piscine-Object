@@ -16,6 +16,10 @@ Simulation::Simulation() {
 	this->_clock = new Clock();
 }
 
+Simulation::~Simulation() {
+	delete this->_clock;
+}
+
 void Simulation::printEstimateTime() {
     for (int i = 0; i < this->_trains.size(); i++) {
 		float vmax = this->_rails[0]->getSpeed() / 3.6;

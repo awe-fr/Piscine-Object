@@ -11,6 +11,7 @@ int main(int ac, char **av) {
 
     Simulation *sim = new Simulation();
 	sim->StartSimulation();
+    delete sim;
 
     clearSingletons();
     return 0;

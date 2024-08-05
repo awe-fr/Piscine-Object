@@ -15,6 +15,7 @@ class Simulation {
         Clock *_clock;
     public:
         Simulation();
+        ~Simulation();
 		void StartSimulation();
         void printEstimateTime();
         void exec();
