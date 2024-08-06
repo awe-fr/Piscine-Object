@@ -14,7 +14,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 CC = c++
 
-CFLAGS = -g #-Wall -Werror -Wextra -g
+CFLAGS = -g
 RM = rm -f
 
 all:			$(NAME)
