@@ -1,13 +1,14 @@
 NAME = TrainSimulation
 
 SRCS = Sources/main.cpp\
+		Sources/Node.cpp\
+		Sources/Rail.cpp\
 		Sources/clear.cpp\
 		Sources/Event.cpp\
-		Sources/Node.cpp\
-		Sources/parser.cpp\
-		Sources/Rail.cpp\
 		Sources/Train.cpp\
 		Sources/Clock.cpp\
+		Sources/parser.cpp\
+		Sources/dijkstra.cpp\
 		Sources/Simulation.cpp\
 
 OBJS = $(SRCS:.cpp=.o)

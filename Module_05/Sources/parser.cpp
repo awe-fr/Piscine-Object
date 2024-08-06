@@ -186,7 +186,7 @@ int eventParsing(std::string line) {
     }
     else
         return 1;
-    if (rate < 0 || time < 0 || mult == 0 || event.empty() || node.empty() || (line.size() > i))
+    if (rate < 0 || rate > 1 || time < 0 || mult == 0 || event.empty() || node.empty() || (line.size() > i))
         return 1;
     if (eventAssign(event, rate, time, node) == 1)
         return 1;
