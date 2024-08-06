@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include <map>
 #include <cmath>
+#include <iostream>
 
 #include "Event.hpp"
 #include "Node.hpp"

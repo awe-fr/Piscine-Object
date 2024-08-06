@@ -83,7 +83,7 @@ int Train::changeRail() {
 	return 0;
 }
 
-int Train::loadEvent(Node *node, std::vector<Event *> events) {
+int Train::loadEvent(Node *node, std::vector<Event *> events, std::ofstream *out) {
 	std::vector<Event *> lst;
 	int ret = 0;
 	for (int i = 0; i < events.size(); i++) {
@@ -99,7 +99,7 @@ int Train::loadEvent(Node *node, std::vector<Event *> events) {
 			if (this->_time < lst[i]->getTime()) {
 				this->_time = lst[i]->getTime();
 			}
-			std::cout << "[" << this->_name << "] trigger a " << lst[i]->getReason() << " in " << node->getName() << " train stopped for " << this->_time << " minutes"<< std::endl;
+			*out << "[" << this->_name << "] trigger a " << lst[i]->getReason() << " in " << node->getName() << " train stopped for " << this->_time << " minutes"<< std::endl;
 			ret = 1;
 		}
 	}

@@ -8,6 +8,7 @@ class Rail;
 
 class Simulation {
     private:
+        std::vector<std::ofstream *> _files;
         std::vector<Train *> _trains;
         std::vector<Event *> _events;
         std::vector<Rail *> _rails;

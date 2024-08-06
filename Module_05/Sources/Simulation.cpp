@@ -14,6 +14,9 @@ Simulation::Simulation() {
     std::vector<Node *> *lst4 = plst4->getList();
     this->_nodes = *lst4;
 	this->_clock = new Clock();
+	for (int i = 0; i < this->_trains.size(); i++) {
+		this->_files.push_back(new std::ofstream(this->_trains[i]->getName().c_str()));
+	}
 }
 
 Simulation::~Simulation() {
@@ -40,9 +43,9 @@ void Simulation::printEstimateTime() {
 		int min = sec / 60;
 		int min2 = sec2 / 60;
 		int time = (((this->_trains[i]->railLenght() - (((meter / 1000) - (meter2 / 1000)) * this->_trains[i]->railNumber())) / this->_rails[0]->getSpeed()) * 100) + min + min2;
-        std::cout << "Train : " << this->_trains[i]->getName() << std::endl;
-		std::cout << "Estimated optimal travel time : " << time / 100 << "h" << ((time % 100) * 60) / 100 << "m" << std::endl;
-		std::cout << std::endl; 
+		*this->_files[i] << "Train : " << this->_trains[i]->getName() << std::endl;
+		*this->_files[i] << "Estimated optimal travel time : " << time / 100 << "h" << ((time % 100) * 60) / 100 << "m" << std::endl;
+		*this->_files[i] << std::endl; 
     }
 }
 
@@ -115,7 +118,7 @@ void Simulation::exec() {
 			if (this->_trains[i]->getStatus() == "Stopped") {
 				if (this->_trains[i]->changeRail() == 1) {
 					this->_trains[i]->setTraveled(0);
-					if (this->_trains[i]->loadEvent(this->_trains[i]->getRail()->getStart(), this->_events) == 1)
+					if (this->_trains[i]->loadEvent(this->_trains[i]->getRail()->getStart(), this->_events, this->_files[i]) == 1)
 						this->_trains[i]->setStatus("Event");
 					else
 						this->_trains[i]->setStatus("Speed up");
@@ -133,6 +136,9 @@ void Simulation::exec() {
 					if (this->_trains[z - 1] == this->_trains[i]) {
 						printTrainStatus(i);
 						this->_trains.erase(this->_trains.begin() + z - 1);
+						this->_files[z - 1]->close();
+						delete this->_files[z - 1];
+						this->_files.erase(this->_files.begin() + z - 1);
 					}
 				}
 			}
@@ -152,13 +158,13 @@ void Simulation::StartSimulation() {
 }
 
 void Simulation::printTrainStatus(int i) {
-	std::cout << "[" << this->_clock->getHour() / 100 << "h" << this->_clock->getHour() % 100 << "] - [";
-	std::cout << this->_trains[i]->getName() << "] - [";
-	std::cout << this->_trains[i]->getRail()->getStart()->getName() << "][" << this->_trains[i]->getRail()->getArrival()->getName() << "] - [";
-	std::cout << this->_trains[i]->getRail()->getLenght() - this->_trains[i]->getTraveled() << "km] - [";
-	std::cout << this->_trains[i]->getStatus() << "] - ";
-	std::cout << this->_trains[i]->getRail()->getTrafic(this->_trains[i]);
-	std::cout << std::endl;
+	*this->_files[i] << "[" << this->_clock->getHour() / 100 << "h" << this->_clock->getHour() % 100 << "] - [";
+	*this->_files[i] << this->_trains[i]->getName() << "] - [";
+	*this->_files[i] << this->_trains[i]->getRail()->getStart()->getName() << "][" << this->_trains[i]->getRail()->getArrival()->getName() << "] - [";
+	*this->_files[i] << this->_trains[i]->getRail()->getLenght() - this->_trains[i]->getTraveled() << "km] - [";
+	*this->_files[i] << this->_trains[i]->getStatus() << "] - ";
+	*this->_files[i] << this->_trains[i]->getRail()->getTrafic(this->_trains[i]);
+	*this->_files[i] << std::endl;
 }
 
 float Simulation::getTimeToStop(Train *train, float speed) {

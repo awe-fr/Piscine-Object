@@ -31,7 +31,7 @@ class Train {
         Node *getDeparture();
 		int railNumber();
         int changeRail();
-        int loadEvent(Node *node, std::vector<Event *> lst);
+        int loadEvent(Node *node, std::vector<Event *> lst, std::ofstream *out);
         void subTime();
         void setSpeed(float value);
         void addSegment(Rail *rail);
